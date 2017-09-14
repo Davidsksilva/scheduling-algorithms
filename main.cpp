@@ -1,5 +1,6 @@
 #include <iostream>
 #include<fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -45,6 +46,64 @@ void printProcesses(int processo[][2],int n)
       cout<<processo[i][0]<<" "<<processo[i][1]<<endl;
   }
 }
+
+void ordernarProcessosChegada(int processo[][2],int n)
+{
+  int a;
+  int temp[2];
+	for(int i = 0;i < n ;i++)
+	{
+		a=i;
+		for(int j=i+1;j < n;j++)
+		{
+			if(processo[j][0] < processo[a][0])
+				a=j;
+		}
+		temp[0]= processo[i][0];
+    temp[1]= processo[i][1];
+		processo[i][0]= processo[a][0];
+    processo[i][1]= processo[a][1];
+		processo[a][0]= temp[0];
+    processo[a][1]= temp[1];
+  }
+}
+
+void ordernarProcessosDuracao(int processo[][2],int n)
+{
+  int a;
+  int temp[2];
+	for(int i = 0;i < n ;i++)
+	{
+		a=i;
+		for(int j=i+1;j < n;j++)
+		{
+			if(processo[j][1] < processo[a][1])
+				a=j;
+		}
+		temp[0]= processo[i][0];
+    temp[1]= processo[i][1];
+		processo[i][0]= processo[a][0];
+    processo[i][1]= processo[a][1];
+		processo[a][0]= temp[0];
+    processo[a][1]= temp[1];
+  }
+}
+
+void FCFS(int processo [][2],int n)
+{
+  ordernarProcessosChegada(processo,n);
+  float tempo_retorno_medio=0;
+  int tempo_acumulado=0;
+  for(int i=0;i<n;i++)
+  {
+    tempo_retorno_medio=tempo_acumulado+processo[i][1];
+    tempo_acumulado+=processo[i][1];
+  }
+  tempo_retorno_medio/=n;
+
+  cout<<"FCFS "<<std::setprecision(1)<<tempo_retorno_medio<<endl;
+}
+
 int main()
 {
   int n;
@@ -52,6 +111,8 @@ int main()
   int processo[n][2];
   getProcessData(processo);
   printProcesses(processo,n);
+  FCFS(processo,n);
+  //
 
   return 0;
 }
