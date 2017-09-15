@@ -38,6 +38,15 @@ void getProcessData(int processo[][2] ) // Lê a lista de inteiros do arquivo
 
 }
 
+bool processLeft(int processo[][2],int n)
+{
+  for(int i=0;i<n;i++)
+  {
+    if(processo[i][1] != 0)
+      return true;
+  }
+  return false;
+}
 void printProcesses(int processo[][2],int n)
 {
   cout<<"Processos:"<<endl;
@@ -92,15 +101,21 @@ void ordernarProcessosDuracao(int processo[][2],int n)
 void FCFS(int processo [][2],int n)
 {
   ordernarProcessosChegada(processo,n);
+  float delay=0;
   float tempo_retorno_medio=0;
   float tempo_resposta_medio=0;
   float tempo_espera_medio=0;
   int tempo_acumulado=0;
   for(int i=0;i<n;i++)
   {
-    tempo_retorno_medio+=tempo_acumulado+processo[i][1];
-    tempo_resposta_medio+=tempo_acumulado;
-    tempo_espera_medio+=tempo_acumulado;
+    if(processo[i][0] > tempo_acumulado)
+    {
+        delay= processo[i][0] - tempo_acumulado;
+    }
+
+    tempo_retorno_medio+=tempo_acumulado+processo[i][1] + delay;
+    tempo_resposta_medio+=tempo_acumulado - processo[i][0];
+    tempo_espera_medio+=tempo_acumulado - processo[i][0];
     tempo_acumulado+=processo[i][1];
   }
   tempo_retorno_medio/=n;
@@ -132,7 +147,7 @@ int proximoProcessoSJF(int processo[][2], int n, int t)
 void SJF(int processo [][2],int n)
 {
   ordernarProcessosChegada(processo,n);
-  printProcesses(processo,n);
+  //printProcesses(processo,n);
 
   float tempo_retorno_medio=0;
   float tempo_resposta_medio=0;
@@ -142,7 +157,7 @@ void SJF(int processo [][2],int n)
   tempo_acumulado=processo[0][0];
   while((id=proximoProcessoSJF(processo,n,tempo_acumulado)) != -1)
   {
-    cout<<id<<endl;
+    //cout<<id<<endl;
     tempo_retorno_medio+=tempo_acumulado+processo[id][1];
     tempo_resposta_medio+=tempo_acumulado;
     tempo_espera_medio+=tempo_acumulado;
