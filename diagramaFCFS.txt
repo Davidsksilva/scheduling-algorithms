@@ -1,4 +1,6 @@
+Diagrama do tempo do Escalonamento por FCFS:
 
+|0|--P0---|5|-P1--|8|-P2-|10|=idle=|12|--P3---|17|
 
 P[0] 
 Tempo de chegada: 0

@@ -7,16 +7,16 @@ Tempo de retorno: 5
 Tempo de resposta: 0
 Tempo de espera: 0
 
-P[1] 
-Tempo de chegada: 2
-Tempo de duracao: 3
-Tempo de retorno: 8
-Tempo de resposta: 3
-Tempo de espera: 3
-
 P[2] 
 Tempo de chegada: 3
 Tempo de duracao: 2
+Tempo de retorno: 7
+Tempo de resposta: 2
+Tempo de espera: 2
+
+P[1] 
+Tempo de chegada: 2
+Tempo de duracao: 3
 Tempo de retorno: 10
 Tempo de resposta: 5
 Tempo de espera: 5
