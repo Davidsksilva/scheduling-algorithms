@@ -56,27 +56,6 @@ void printProcesses(int processo[][2],int n)
   }
 }
 
-void ordernarProcessosChegada(int processo[][2],int n)
-{
-  int a;
-  int temp[2];
-	for(int i = 0;i < n ;i++)
-	{
-		a=i;
-		for(int j=i+1;j < n;j++)
-		{
-			if(processo[j][0] < processo[a][0])
-				a=j;
-		}
-		temp[0]= processo[i][0];
-    temp[1]= processo[i][1];
-		processo[i][0]= processo[a][0];
-    processo[i][1]= processo[a][1];
-		processo[a][0]= temp[0];
-    processo[a][1]= temp[1];
-  }
-}
-
 void ordernarProcessosDuracao(int processo[][2],int n)
 {
   int a;
@@ -88,6 +67,29 @@ void ordernarProcessosDuracao(int processo[][2],int n)
 		{
 			if(processo[j][1] < processo[a][1])
 				a=j;
+		}
+		temp[0]= processo[i][0];
+    temp[1]= processo[i][1];
+		processo[i][0]= processo[a][0];
+    processo[i][1]= processo[a][1];
+		processo[a][0]= temp[0];
+    processo[a][1]= temp[1];
+  }
+}
+
+void ordernarProcessosChegada(int processo[][2],int n)
+{
+  int a;
+  int temp[2];
+	for(int i = 0;i < n ;i++)
+	{
+		a=i;
+		for(int j=i+1;j < n;j++)
+		{
+			if(processo[j][0] < processo[a][0])
+				a=j;
+      else if((processo[j][0] == processo[a][0]) &&(processo[j][1] < processo[a][1]))
+      a=j;
 		}
 		temp[0]= processo[i][0];
     temp[1]= processo[i][1];
@@ -177,7 +179,6 @@ void FCFScomDiagrama(int processo [][2],int n)
     tempo_resposta_medio+=tempo_acumulado - processo[i][0]+ idle;
     tempo_espera_medio+=tempo_acumulado - processo[i][0] + idle;
 
-    int linha=0;
     for(int j=0;j<processo[i][1];j++)
     {
       if(j == processo[i][1]/2)
@@ -209,7 +210,7 @@ void FCFScomDiagrama(int processo [][2],int n)
 int proximoProcessoSJF(int processo[][2], int n, int t)
 {
   int id_min_duration=2147483647;
-  if(processLeft)
+  if(processLeft(processo,n))
   {
     for(int i=0;i<n;i++)
     {
@@ -235,7 +236,7 @@ int proximoProcessoSJF(int processo[][2], int n, int t)
       }
 
     }
-}
+  }
   if(id_min_duration==2147483647)
     return -1;
   else
@@ -307,7 +308,6 @@ void SJFcomDiagrama(int processo [][2],int n)
     tempo_resposta_medio+=tempo_acumulado - processo[id][0]+ idle;
     tempo_espera_medio+=tempo_acumulado - processo[id][0]+ idle;
 
-    int linha=0;
     for(int j=0;j<processo[id][1];j++)
     {
       if(j == processo[id][1]/2)
@@ -343,6 +343,8 @@ int main()
   n=getLines();
   int processo[n][2];
   getProcessData(processo);
+  //ordernarProcessosChegada(processo,n);
+  //printProcesses(processo,n);
   FCFScomDiagrama(processo,n);
   SJFcomDiagrama(processo,n);
 

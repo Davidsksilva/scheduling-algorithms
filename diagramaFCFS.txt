@@ -1,6 +1,6 @@
 Diagrama do tempo do Escalonamento por FCFS:
 
-|0|--P0---|5|-P1--|8|-P2-|10|=idle=|12|--P3---|17|
+|0|--P0---|5|-P1--|8|--P2--|12|--P3---|17|
 
 P[0] 
 Tempo de chegada: 0
@@ -10,23 +10,23 @@ Tempo de resposta: 0
 Tempo de espera: 0
 
 P[1] 
-Tempo de chegada: 2
+Tempo de chegada: 3
 Tempo de duracao: 3
 Tempo de retorno: 8
-Tempo de resposta: 3
-Tempo de espera: 3
+Tempo de resposta: 2
+Tempo de espera: 2
 
 P[2] 
 Tempo de chegada: 3
-Tempo de duracao: 2
-Tempo de retorno: 10
+Tempo de duracao: 4
+Tempo de retorno: 12
 Tempo de resposta: 5
 Tempo de espera: 5
 
 P[3] 
 Tempo de chegada: 12
 Tempo de duracao: 5
-Tempo de retorno: 15
+Tempo de retorno: 17
 Tempo de resposta: 0
 Tempo de espera: 0
 
