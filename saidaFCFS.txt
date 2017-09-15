@@ -1,0 +1,22 @@
+Escalonamento por FCFS:
+--------------------------------------
+Processo [0 10] 
+Tempo de retorno: 10
+Tempo de resposta: 0.0
+Tempo de espera: 0.0
+
+Processo [0 20] 
+Tempo de retorno: 30
+Tempo de resposta: 10.0
+Tempo de espera: 10.0
+
+Processo [4 8] 
+Tempo de retorno: 38
+Tempo de resposta: 26.0
+Tempo de espera: 26.0
+
+Processo [4 6] 
+Tempo de retorno: 44
+Tempo de resposta: 34.0
+Tempo de espera: 34.0
+

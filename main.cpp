@@ -52,7 +52,7 @@ void printProcesses(int processo[][2],int n)
   cout<<"Processos:"<<endl;
   for(int i=0;i<n;i++)
   {
-      cout<<processo[i][0]<<" "<<processo[i][1]<<endl;
+      cout<<"["<<i<<"] "<<processo[i][0]<<" "<<processo[i][1]<<endl;
   }
 }
 
@@ -100,6 +100,9 @@ void ordernarProcessosDuracao(int processo[][2],int n)
 
 void FCFS(int processo [][2],int n)
 {
+  ofstream file;
+  file.open ("saidaFCFS.txt");
+  file << "Escalonamento por FCFS:\n--------------------------------------\n";
   ordernarProcessosChegada(processo,n);
   float delay=0;
   float tempo_retorno_medio=0;
@@ -112,10 +115,13 @@ void FCFS(int processo [][2],int n)
     {
         delay= processo[i][0] - tempo_acumulado;
     }
-
-    tempo_retorno_medio+=tempo_acumulado+processo[i][1] + delay;
-    tempo_resposta_medio+=tempo_acumulado - processo[i][0];
-    tempo_espera_medio+=tempo_acumulado - processo[i][0];
+    tempo_retorno_medio+=tempo_acumulado+processo[i][1];
+    tempo_resposta_medio+=tempo_acumulado - processo[i][0]+ delay;
+    tempo_espera_medio+=tempo_acumulado - processo[i][0] + delay;
+    file<<"Processo ["<<processo[i][0]<<" "<<processo[i][1]<<"] "<<endl<<
+    std::fixed<<std::setprecision(1)<<"Tempo de retorno: "<<tempo_acumulado+processo[i][1]<<endl
+    <<"Tempo de resposta: "<<tempo_acumulado - processo[i][0]+ delay<<endl<<
+    "Tempo de espera: "<<tempo_acumulado - processo[i][0] + delay<<endl<<endl;
     tempo_acumulado+=processo[i][1];
   }
   tempo_retorno_medio/=n;
@@ -124,6 +130,7 @@ void FCFS(int processo [][2],int n)
 
   cout<<"FCFS "<<std::fixed<<std::setprecision(1)<<tempo_retorno_medio<<" "
   <<tempo_resposta_medio<<" "<<tempo_espera_medio<<endl;
+  file.close();
 }
 
 int proximoProcessoSJF(int processo[][2], int n, int t)
