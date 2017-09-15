@@ -98,17 +98,40 @@ void ordernarProcessosDuracao(int processo[][2],int n)
   }
 }
 
+void transferText(string input,string output)
+{
+  ifstream infile(input);
+  ofstream outfile(output,std::ios::app);
+  string content = "";
+  int i;
+
+  for(i=0 ; infile.eof()!=true ; i++) // get content of infile
+      content += infile.get();
+
+  i--;
+  content.erase(content.end()-1);     // erase last character
+
+  infile.close();
+
+  outfile << content;                 // output
+  outfile.close();
+}
 void FCFS(int processo [][2],int n)
 {
-  ofstream file;
+  ofstream file,file2;
   file.open ("saidaFCFS.txt");
-  file << "Escalonamento por FCFS:\n--------------------------------------\n";
+  file2.open("diagramaFCFS.txt");
+  file << "\n\n";
+  file2<< "Diagrama do tempo do Escalonamento por FCFS:\n\n";
   ordernarProcessosChegada(processo,n);
   float delay=0;
   float tempo_retorno_medio=0;
   float tempo_resposta_medio=0;
   float tempo_espera_medio=0;
-  int tempo_acumulado=0;
+  int tempo_acumulado= processo[0][0];
+
+  file2<<"|"<<tempo_acumulado<<"|";
+
   for(int i=0;i<n;i++)
   {
     if(processo[i][0] > tempo_acumulado)
@@ -118,19 +141,35 @@ void FCFS(int processo [][2],int n)
     tempo_retorno_medio+=tempo_acumulado+processo[i][1];
     tempo_resposta_medio+=tempo_acumulado - processo[i][0]+ delay;
     tempo_espera_medio+=tempo_acumulado - processo[i][0] + delay;
-    file<<"Processo ["<<processo[i][0]<<" "<<processo[i][1]<<"] "<<endl<<
-    std::fixed<<std::setprecision(1)<<"Tempo de retorno: "<<tempo_acumulado+processo[i][1]<<endl
+
+    int linha=0;
+    for(int j=0;j<processo[i][1];j++)
+    {
+      if(j == processo[i][1]/2)
+        file2<<"P"<<i;
+      file2<<"-";
+    }
+      tempo_acumulado+=processo[i][1];
+    file2<<"|"<<tempo_acumulado<<"|";
+
+
+    file<<"P["<<i<<"] "<<endl<<
+    std::fixed<<std::setprecision(1)<<"Tempo de chegada: "<<processo[i][0]<<endl<<
+    "Tempo de duracao: "<<processo[i][1]<<endl<<"Tempo de retorno: "<<tempo_acumulado+processo[i][1]<<endl
     <<"Tempo de resposta: "<<tempo_acumulado - processo[i][0]+ delay<<endl<<
     "Tempo de espera: "<<tempo_acumulado - processo[i][0] + delay<<endl<<endl;
-    tempo_acumulado+=processo[i][1];
+
   }
+  file<<endl<<endl;
   tempo_retorno_medio/=n;
   tempo_resposta_medio/=n;
   tempo_espera_medio/=n;
 
   cout<<"FCFS "<<std::fixed<<std::setprecision(1)<<tempo_retorno_medio<<" "
   <<tempo_resposta_medio<<" "<<tempo_espera_medio<<endl;
-  file.close();
+    file.close();
+  file2.close();
+  transferText("saidaFCFS.txt","diagramaFCFS.txt");
 }
 
 int proximoProcessoSJF(int processo[][2], int n, int t)
