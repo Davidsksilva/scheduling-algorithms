@@ -5,28 +5,28 @@ Pn: processo n executado
 pn: processo n chegou na fila
 idle= cpu sem processo
 
-|0|p0p1-P0-|2|-P1-p2p3|4|-P2-|6|-P3-|8|-P0-|10|-P1-|12|-P2-|14|-P3-|16|-P0-|18|-P1-|20|P2--|22|-P3-|24|-P0-|26|-P1-|28|P3--|30|P0--|32|-P1-|34|-P1-|36|-P1-|38|-P1-|40|-P1-|42|P1--|44|
+|0|p0p1----p2p3P0------|10|----------P1----------|30|--P2----|36|---P3-----|44|
 
 P[0] 0 10
-Tempo de retorno: 32.0
+Tempo de retorno: 10.0
 Tempo de resposta: 0.0
-Tempo de espera: 22.0
+Tempo de espera: 0.0
 
 P[1] 0 20
-Tempo de retorno: 44.0
-Tempo de resposta: 2.0
-Tempo de espera: 24.0
+Tempo de retorno: 30.0
+Tempo de resposta: 10.0
+Tempo de espera: 10.0
 
 P[2] 4 6
-Tempo de retorno: 14.0
-Tempo de resposta: 0.0
-Tempo de espera: 8.0
+Tempo de retorno: 32.0
+Tempo de resposta: 26.0
+Tempo de espera: 26.0
 
 P[3] 4 8
-Tempo de retorno: 22.0
-Tempo de resposta: 2.0
-Tempo de espera: 14.0
+Tempo de retorno: 40.0
+Tempo de resposta: 32.0
+Tempo de espera: 32.0
 
 Tempo de retorno medio: 28.0
-Tempo de resposta medio: 1.0
+Tempo de resposta medio: 17.0
 Tempo de espera medio: 17.0

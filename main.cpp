@@ -382,7 +382,7 @@ void RRcomDiagrama(int processo[][2], int n)
   int traco=0;
   int idle=0;
   tempo_acumulado=processo[0][0];
-  int quantum=2;
+  int quantum=20;
   file2<<"|"<<tempo_acumulado<<"|";
   for(int u=0;u<n;u++)
   {
@@ -420,19 +420,6 @@ void RRcomDiagrama(int processo[][2], int n)
       file2<<"|"<<tempo_acumulado<<"|";
     }
 
-    for(int i=0;i<n;i++) // Quando nao é o processo da vez, incrementar tempo de espera deles
-    {
-      if((processo[i][0] <= tempo_acumulado)&&(processo[i][1] != 0)) // Se o processo tiver chegado ate aqui e nao estiver finalizado
-
-      {
-        if(i != id) // Se nao for o processo a ser escalonado no instante, incrementar o tempo de espera
-        {
-          tempo_retorno[i]+=quantum;
-          tempo_espera[i]+=quantum;
-        }
-
-      }
-    }
     if(processo[id][1] != 0) // Se o procesos ainda nao finalizou ( resta tempo )
     {
       if(ja_foi_iniciado[id] == false)
@@ -440,14 +427,14 @@ void RRcomDiagrama(int processo[][2], int n)
         tempo_resposta[id]=tempo_acumulado;
         ja_foi_iniciado[id]=true;
       }
-      if(processo[id][1] > quantum)
+      if(processo[id][1] >= quantum)
       {
-        tempo_retorno[id]+=2;
+        tempo_retorno[id]+=quantum;
         processo[id][1]-=quantum;
         tempo_acumulado+=quantum;
         for(int j=0;j<quantum;j++)
         {
-          if(j == 1)
+          if(j == quantum/2)
             file2<<"P"<<id;
           file2<<"-";
           traco++;
@@ -458,6 +445,19 @@ void RRcomDiagrama(int processo[][2], int n)
           }
         }
         file2<<"|"<<tempo_acumulado<<"|";
+        for(int i=0;i<n;i++) // Quando nao é o processo da vez, incrementar tempo de espera deles
+        {
+          if((processo[i][0] <= tempo_acumulado)&&(processo[i][1] != 0)) // Se o processo tiver chegado ate aqui e nao estiver finalizado
+
+          {
+            if(i != id) // Se nao for o processo a ser escalonado no instante, incrementar o tempo de espera
+            {
+              tempo_retorno[i]+=quantum;
+              tempo_espera[i]+=quantum;
+            }
+
+          }
+        }
       }
       else
       {
@@ -465,7 +465,7 @@ void RRcomDiagrama(int processo[][2], int n)
         tempo_acumulado+=processo[id][1];
         for(int j=0;j<processo[id][1];j++)
         {
-          if(j == 0)
+          if(j == (processo[id][1]/2)-1)
             file2<<"P"<<id;
           file2<<"-";
           traco++;
@@ -476,6 +476,19 @@ void RRcomDiagrama(int processo[][2], int n)
           }
         }
         file2<<"|"<<tempo_acumulado<<"|";
+        for(int i=0;i<n;i++) // Quando nao é o processo da vez, incrementar tempo de espera deles
+        {
+          if((processo[i][0] <= tempo_acumulado)&&(processo[i][1] != 0)) // Se o processo tiver chegado ate aqui e nao estiver finalizado
+
+          {
+            if(i != id) // Se nao for o processo a ser escalonado no instante, incrementar o tempo de espera
+            {
+              tempo_retorno[i]+=processo[id][1];
+              tempo_espera[i]+=processo[id][1];
+            }
+
+          }
+        }
         processo[id][1]=0;
       }
     }
