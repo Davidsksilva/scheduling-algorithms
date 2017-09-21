@@ -27,7 +27,6 @@ void ordernarProcessosChegada(int processo[][2],int n)
     processo[a][1]= temp[1];
   }
 }
-
 bool processLeft(int processo[][2],int n)
 {
   for(int i=0;i<n;i++)
