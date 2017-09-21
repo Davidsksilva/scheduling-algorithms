@@ -1,34 +1,34 @@
 Diagrama do tempo do Escalonamento por SJF:
 
-|0|--P0---|5|-P1--|8|--P2--|12|--P3---|17|
+Legenda do diagrama:
+Pn: processo n executado
+pn: processo n chegou na fila
+idle= cpu sem processo
 
-P[0] 
-Tempo de chegada: 0
-Tempo de duracao: 5
-Tempo de retorno: 5
+|0|p0p1----p2p3-P0-----|10|---P2---|16|----P3----|24|----------P1----------|44|
+
+P[0] 0 10
+Tempo de retorno: 10
 Tempo de resposta: 0
 Tempo de espera: 0
 
-P[1] 
-Tempo de chegada: 3
-Tempo de duracao: 3
-Tempo de retorno: 8
-Tempo de resposta: 2
-Tempo de espera: 2
-
-P[2] 
-Tempo de chegada: 3
-Tempo de duracao: 4
+P[2] 4 6
 Tempo de retorno: 12
-Tempo de resposta: 5
-Tempo de espera: 5
+Tempo de resposta: 6
+Tempo de espera: 6
 
-P[3] 
-Tempo de chegada: 12
-Tempo de duracao: 5
-Tempo de retorno: 17
-Tempo de resposta: 0
-Tempo de espera: 0
+P[3] 4 8
+Tempo de retorno: 20
+Tempo de resposta: 12
+Tempo de espera: 12
+
+P[1] 0 20
+Tempo de retorno: 44
+Tempo de resposta: 24
+Tempo de espera: 24
 
 
 
+Tempo de retorno medio: 21.5
+Tempo de resposta medio: 10.5
+Tempo de espera medio: 10.5

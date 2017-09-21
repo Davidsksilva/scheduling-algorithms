@@ -1,138 +1,26 @@
 #include <iostream>
 #include<fstream>
 #include <iomanip>
+#include "file.h"
+#include "utility.h"
 
 using namespace std;
 
-int  getLines() // Lê a lista de inteiros do arquivo
-{
-  std::ifstream f("processos.txt");
-  std::string line;
-  int lines=0;
-  for (int i = 0; std::getline(f, line); ++i)
-    lines++;
-  return lines;
-}
-
-void getProcessData(int processo[][2] ) // Lê a lista de inteiros do arquivo
-{
-  int aux=0;
-  int linha=0;
-  int data;
-  std::ifstream f("processos.txt");
-
-  while(f >> data)
-  {
-      aux++;
-      if((aux%2)==0)
-      {
-        processo[linha][1]=data;
-        linha++;
-      }
-      else
-      {
-        processo[linha][0]=data;
-
-      }
-  }
-
-}
-
-bool processLeft(int processo[][2],int n)
-{
-  for(int i=0;i<n;i++)
-  {
-    if(processo[i][1] != 0)
-      return true;
-  }
-  return false;
-}
-void printProcesses(int processo[][2],int n)
-{
-  cout<<"Processos:"<<endl;
-  for(int i=0;i<n;i++)
-  {
-      cout<<"["<<i<<"] "<<processo[i][0]<<" "<<processo[i][1]<<endl;
-  }
-}
-
-void ordernarProcessosDuracao(int processo[][2],int n)
-{
-  int a;
-  int temp[2];
-	for(int i = 0;i < n ;i++)
-	{
-		a=i;
-		for(int j=i+1;j < n;j++)
-		{
-			if(processo[j][1] < processo[a][1])
-				a=j;
-		}
-		temp[0]= processo[i][0];
-    temp[1]= processo[i][1];
-		processo[i][0]= processo[a][0];
-    processo[i][1]= processo[a][1];
-		processo[a][0]= temp[0];
-    processo[a][1]= temp[1];
-  }
-}
-
-void ordernarProcessosChegada(int processo[][2],int n)
-{
-  int a;
-  int temp[2];
-	for(int i = 0;i < n ;i++)
-	{
-		a=i;
-		for(int j=i+1;j < n;j++)
-		{
-			if(processo[j][0] < processo[a][0])
-				a=j;
-      else if((processo[j][0] == processo[a][0]) &&(processo[j][1] < processo[a][1]))
-      a=j;
-		}
-		temp[0]= processo[i][0];
-    temp[1]= processo[i][1];
-		processo[i][0]= processo[a][0];
-    processo[i][1]= processo[a][1];
-		processo[a][0]= temp[0];
-    processo[a][1]= temp[1];
-  }
-}
-
-void transferText(string input,string output)
-{
-  ifstream infile(input);
-  ofstream outfile(output,std::ios::app);
-  string content = "";
-  int i;
-
-  for(i=0 ; infile.eof()!=true ; i++) // get content of infile
-      content += infile.get();
-
-  i--;
-  content.erase(content.end()-1);     // erase last character
-
-  infile.close();
-
-  outfile << content;                 // output
-  outfile.close();
-}
 void FCFS(int processo [][2],int n)
 {
-  ordernarProcessosChegada(processo,n);
+  ordernarProcessosChegada(processo,n); // Orderna os processos em ordem de chegada na fila de prontos
   int idle=0;
   float tempo_retorno_medio=0;
   float tempo_resposta_medio=0;
   float tempo_espera_medio=0;
   int tempo_acumulado= processo[0][0];
 
-  for(int i=0;i<n;i++)
+  for(int i=0;i<n;i++) // Itera entre os processos em ordem de chegada à fila de prontos
   {
-    if(processo[i][0] > tempo_acumulado)
-        idle= processo[i][0] - tempo_acumulado;
-    tempo_retorno_medio+=tempo_acumulado+processo[i][1];
-    tempo_resposta_medio+=tempo_acumulado - processo[i][0]+ idle;
+    if(processo[i][0] > tempo_acumulado)//Se o t. de chegada do próximo processo excede o t.  de retorno do último processo a cpu fica em idle
+      idle= processo[i][0] - tempo_acumulado;
+    tempo_retorno_medio+=tempo_acumulado+processo[i][1]; //T. retorno = tempo que o processo inicia + t. de duracao do processo
+    tempo_resposta_medio+=tempo_acumulado - processo[i][0]+ idle;//T. resposta = tempo que o processo inicia - tempo de chegada +
     tempo_espera_medio+=tempo_acumulado - processo[i][0] + idle;
 
     tempo_acumulado+=processo[i][1];
@@ -151,48 +39,69 @@ void FCFScomDiagrama(int processo [][2],int n)
   file2.open("diagramaFCFS.txt");
   file << "\n\n";
   file2<< "Diagrama do tempo do Escalonamento por FCFS:\n\n";
+  file2<< "Legenda do diagrama:\nPn: processo n executado\npn: processo n chegou na fila\nidle= cpu sem processo\n\n";
   ordernarProcessosChegada(processo,n);
   int idle=0;
   float tempo_retorno_medio=0;
   float tempo_resposta_medio=0;
   float tempo_espera_medio=0;
   int tempo_acumulado= processo[0][0];
-
   file2<<"|"<<tempo_acumulado<<"|";
-
+  int traco=0;
+  for(int u=0;u<n;u++)
+  {
+    if(traco == processo[u][0])
+      file2<<"p"<<u;
+  }
   for(int i=0;i<n;i++)
   {
     if(processo[i][0] > tempo_acumulado)
     {
         idle= processo[i][0] - tempo_acumulado;
+        tempo_acumulado+=idle;
+        cout<<"ta "<<tempo_acumulado<<endl;
         for(int k=0;k<idle;k++)
         {
           if(k==idle/2)
             file2<<"idle";
 
-          file2<<"=";
+          file2<<"-";
+          traco++;
+          for(int u=0;u<n;u++)
+          {
+            if(traco == processo[u][0])
+              file2<<"p"<<u;
+          }
         }
-        file2<<"|"<<idle+tempo_acumulado<<"|";
+        file2<<"|"<<tempo_acumulado<<"|";
 
     }
-    tempo_retorno_medio+=tempo_acumulado+processo[i][1];
-    tempo_resposta_medio+=tempo_acumulado - processo[i][0]+ idle;
-    tempo_espera_medio+=tempo_acumulado - processo[i][0] + idle;
+    tempo_retorno_medio+=tempo_acumulado+processo[i][1] - processo[i][0];
+    tempo_resposta_medio+=tempo_acumulado - processo[i][0];//+ idle;
+    tempo_espera_medio+=tempo_acumulado - processo[i][0];// + idle;
 
     for(int j=0;j<processo[i][1];j++)
     {
       if(j == processo[i][1]/2)
         file2<<"P"<<i;
       file2<<"-";
+      traco++;
+      for(int u=0;u<n;u++)
+      {
+        if(traco == processo[u][0])
+          file2<<"p"<<u;
+      }
     }
 
-    file<<"P["<<i<<"] "<<endl<<
-    std::fixed<<std::setprecision(1)<<"Tempo de chegada: "<<processo[i][0]<<endl<<
-    "Tempo de duracao: "<<processo[i][1]<<endl<<"Tempo de retorno: "<<tempo_acumulado+processo[i][1]<<endl
+    file<<"P["<<i<<"] "<<processo[i][0]<<" "<<processo[i][1]<<endl<<
+    std::fixed<<std::setprecision(1)<<"Tempo de retorno: "<<tempo_acumulado+processo[i][1]-processo[i][0]<<endl
     <<"Tempo de resposta: "<<tempo_acumulado - processo[i][0]+ idle<<endl<<
     "Tempo de espera: "<<tempo_acumulado - processo[i][0] + idle<<endl<<endl;
 
     tempo_acumulado+=processo[i][1];
+
+
+
   file2<<"|"<<tempo_acumulado+idle<<"|";
 
   }
@@ -203,7 +112,11 @@ void FCFScomDiagrama(int processo [][2],int n)
 
   cout<<"FCFS "<<std::fixed<<std::setprecision(1)<<tempo_retorno_medio<<" "
   <<tempo_resposta_medio<<" "<<tempo_espera_medio<<endl;
-    file.close();
+
+  file<<"Tempo de retorno medio: "<<tempo_retorno_medio<<endl<<"Tempo de resposta medio: "<<
+  tempo_resposta_medio<<endl<<"Tempo de espera medio: "<<tempo_espera_medio<<endl;
+
+  file.close();
   file2.close();
   transferText("saidaFCFS.txt","diagramaFCFS.txt");
 }
@@ -279,52 +192,69 @@ void SJFcomDiagrama(int processo [][2],int n)
   file2.open("diagramaSJF.txt");
   file << "\n\n";
   file2<< "Diagrama do tempo do Escalonamento por SJF:\n\n";
+  file2<< "Legenda do diagrama:\nPn: processo n executado\npn: processo n chegou na fila\nidle= cpu sem processo\n\n";
   ordernarProcessosChegada(processo,n);
   float tempo_retorno_medio=0;
   float tempo_resposta_medio=0;
   float tempo_espera_medio=0;
   int tempo_acumulado=0;
   int id=0;
+  int traco=0;
   int idle=0;
   tempo_acumulado=processo[0][0];
 
   file2<<"|"<<tempo_acumulado<<"|";
-
+  for(int u=0;u<n;u++)
+  {
+    if(traco == processo[u][0])
+      file2<<"p"<<u;
+  }
   while((id=proximoProcessoSJF(processo,n,tempo_acumulado)) != -1)
   {
     if(processo[id][0] > tempo_acumulado)
     {
       idle= processo[id][0] - tempo_acumulado;
+      tempo_acumulado+=idle;
       for(int k=0;k<idle;k++)
       {
         if(k==idle/2)
           file2<<"idle";
-
-        file2<<"=";
+        traco++;
+        for(int u=0;u<n;u++)
+        {
+          if(traco == processo[u][0])
+          file2<<"p"<<u;
+        }
+        file2<<"-";
       }
-      file2<<"|"<<idle+tempo_acumulado<<"|";
+      file2<<"|"<<tempo_acumulado<<"|";
     }
-    tempo_retorno_medio+=tempo_acumulado+processo[id][1];
-    tempo_resposta_medio+=tempo_acumulado - processo[id][0]+ idle;
-    tempo_espera_medio+=tempo_acumulado - processo[id][0]+ idle;
+    tempo_retorno_medio+=tempo_acumulado+processo[id][1] - processo[id][0];
+    tempo_resposta_medio+=tempo_acumulado - processo[id][0];//+ idle;
+    tempo_espera_medio+=tempo_acumulado - processo[id][0];//+ idle;
 
     for(int j=0;j<processo[id][1];j++)
     {
       if(j == processo[id][1]/2)
         file2<<"P"<<id;
       file2<<"-";
+      traco++;
+      for(int u=0;u<n;u++)
+      {
+        if(traco == processo[u][0])
+          file2<<"p"<<u;
+      }
     }
 
-    file<<"P["<<id<<"] "<<endl<<
-    std::fixed<<std::setprecision(1)<<"Tempo de chegada: "<<processo[id][0]<<endl<<
-    "Tempo de duracao: "<<processo[id][1]<<endl<<"Tempo de retorno: "<<tempo_acumulado+processo[id][1]<<endl
+    file<<"P["<<id<<"] "<<processo[id][0]<<" "<<processo[id][1]<<endl<<
+    std::fixed<<std::setprecision(1)<<"Tempo de retorno: "<<tempo_acumulado+processo[id][1] - processo[id][0]<<endl
     <<"Tempo de resposta: "<<tempo_acumulado - processo[id][0]+ idle<<endl<<
     "Tempo de espera: "<<tempo_acumulado - processo[id][0] + idle<<endl<<endl;
 
     tempo_acumulado+=processo[id][1];
     processo[id][1]=0;
     file2<<"|"<<tempo_acumulado+idle<<"|";
-  }
+    }
   file<<endl<<endl;
   tempo_retorno_medio/=n;
   tempo_resposta_medio/=n;
@@ -332,10 +262,11 @@ void SJFcomDiagrama(int processo [][2],int n)
 
   cout<<"SJF "<<std::fixed<<std::setprecision(1)<<tempo_retorno_medio<<" "
   <<tempo_resposta_medio<<" "<<tempo_espera_medio<<endl;
-
+  file<<"Tempo de retorno medio: "<<tempo_retorno_medio<<endl<<"Tempo de resposta medio: "<<
+  tempo_resposta_medio<<endl<<"Tempo de espera medio: "<<tempo_espera_medio<<endl;
   file.close();
-file2.close();
-transferText("saidaSJF.txt","diagramaSJF.txt");
+  file2.close();
+  transferText("saidaSJF.txt","diagramaSJF.txt");
 }
 int main()
 {
@@ -343,9 +274,8 @@ int main()
   n=getLines();
   int processo[n][2];
   getProcessData(processo);
-  //ordernarProcessosChegada(processo,n);
-  //printProcesses(processo,n);
   FCFScomDiagrama(processo,n);
+  getProcessData(processo);
   SJFcomDiagrama(processo,n);
 
 

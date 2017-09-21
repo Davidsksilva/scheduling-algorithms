@@ -1,32 +1,27 @@
 
 
-P[0] 
-Tempo de chegada: 0
-Tempo de duracao: 5
-Tempo de retorno: 5
+P[0] 0 10
+Tempo de retorno: 10
 Tempo de resposta: 0
 Tempo de espera: 0
 
-P[1] 
-Tempo de chegada: 3
-Tempo de duracao: 3
-Tempo de retorno: 8
-Tempo de resposta: 2
-Tempo de espera: 2
+P[1] 0 20
+Tempo de retorno: 30
+Tempo de resposta: 10
+Tempo de espera: 10
 
-P[2] 
-Tempo de chegada: 3
-Tempo de duracao: 4
-Tempo de retorno: 12
-Tempo de resposta: 5
-Tempo de espera: 5
+P[2] 4 6
+Tempo de retorno: 32
+Tempo de resposta: 26
+Tempo de espera: 26
 
-P[3] 
-Tempo de chegada: 12
-Tempo de duracao: 5
-Tempo de retorno: 17
-Tempo de resposta: 0
-Tempo de espera: 0
+P[3] 4 8
+Tempo de retorno: 40
+Tempo de resposta: 32
+Tempo de espera: 32
 
 
 
+Tempo de retorno medio: 28.0
+Tempo de resposta medio: 17.0
+Tempo de espera medio: 17.0
