@@ -5,7 +5,7 @@
 #include <iomanip>
 using namespace std;
 
-void ordernarProcessosChegada(int processo[][2],int n)
+inline void ordernarProcessosChegada(int processo[][2],int n)
 {
   int a;
   int temp[2];
@@ -27,7 +27,7 @@ void ordernarProcessosChegada(int processo[][2],int n)
     processo[a][1]= temp[1];
   }
 }
-bool processLeft(int processo[][2],int n)
+inline bool processLeft(int processo[][2],int n)
 {
   for(int i=0;i<n;i++)
   {
@@ -36,7 +36,7 @@ bool processLeft(int processo[][2],int n)
   }
   return false;
 }
-void printProcesses(int processo[][2],int n)
+inline void printProcesses(int processo[][2],int n)
 {
   cout<<"Processos:"<<endl;
   for(int i=0;i<n;i++)
@@ -45,7 +45,7 @@ void printProcesses(int processo[][2],int n)
   }
 }
 
-void transferText(string input,string output)
+inline void transferText(string input,string output)
 {
   ifstream infile(input);
   ofstream outfile(output,std::ios::app);
@@ -63,9 +63,5 @@ void transferText(string input,string output)
   outfile << content;                 // output
   outfile.close();
 }
-
-
-
-
 
 #endif

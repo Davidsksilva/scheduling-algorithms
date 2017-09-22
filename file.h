@@ -3,7 +3,7 @@
 #include <iostream>
 #include<fstream>
 #include "utility.h"
-int  getLines() // Lê a lista de inteiros do arquivo
+inline int  getLines() // Lê a lista de inteiros do arquivo
 {
   std::ifstream f("processos.txt");
   std::string line;
@@ -12,7 +12,7 @@ int  getLines() // Lê a lista de inteiros do arquivo
     lines++;
   return lines;
 }
-void getProcessData(int processo[][2] ) // Lê a lista de inteiros do arquivo
+inline void getProcessData(int processo[][2] ) // Lê a lista de inteiros do arquivo
 {
   int aux=0;
   int linha=0;
