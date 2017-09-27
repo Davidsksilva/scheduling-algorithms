@@ -2,9 +2,23 @@
 #define _UTILITY_H_
 #include <iostream>
 #include<fstream>
+#include <queue>
 #include <iomanip>
 using namespace std;
 
+inline bool isInQueue(queue <int> ProcessQueue,int value)
+{
+  int aux;
+  while(!ProcessQueue.empty())
+  {
+
+    aux=ProcessQueue.front();
+    ProcessQueue.pop();
+    if(aux == value)
+      return true;
+  }
+  return false;
+}
 inline void ordernarProcessosChegada(int processo[][2],int n)
 {
   int a;
@@ -16,8 +30,8 @@ inline void ordernarProcessosChegada(int processo[][2],int n)
 		{
 			if(processo[j][0] < processo[a][0])
 				a=j;
-      else if((processo[j][0] == processo[a][0]) &&(processo[j][1] < processo[a][1]))
-      a=j;
+      /*else if((processo[j][0] == processo[a][0]) &&(processo[j][1] < processo[a][1]))
+      a=j;*/
 		}
 		temp[0]= processo[i][0];
     temp[1]= processo[i][1];

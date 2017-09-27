@@ -1,5 +1,6 @@
 #include <iostream>
 #include<fstream>
+#include <queue>
 #include <iomanip>
 #include "file.h"
 #include "utility.h"
@@ -379,19 +380,32 @@ static void RRcomDiagrama(int process[][2], int n)
   float response_time[n]={0};
   float waiting_time[n]={0};
   int time_passed=0;
+  queue <int> processQueue;
   int id=0;
   int traco=0;
   int idle=0;
   time_passed=process[0][0];
-  int quantum=20;
+  int quantum=2;
   file2<<"|"<<time_passed<<"|";
   for(int u=0;u<n;u++)
   {
     if(traco == process[u][0])
       file2<<"p"<<u;
   }
+  /*for(int i=0;i<n;i++)
+  {
+    if(process[i][0] <= time_passed)
+      processQueue.push(i);
+  }*/
+  processQueue.push(0);
   while(processLeft(process,n)) // Checa se tem process sem ser finalizado
   {
+    if(!processQueue.empty())
+    {
+      id= processQueue.front();
+      processQueue.pop();
+    }
+
     if(process[id][1] != 0)
     {
     if(process[id][0] > time_passed)
@@ -430,22 +444,6 @@ static void RRcomDiagrama(int process[][2], int n)
       }
       if(process[id][1] >= quantum)
       {
-        return_time[id]+=quantum;
-        process[id][1]-=quantum;
-        time_passed+=quantum;
-        for(int j=0;j<quantum;j++)
-        {
-          if(j == quantum/2)
-            file2<<"P"<<id;
-          file2<<"-";
-          traco++;
-          for(int u=0;u<n;u++)
-          {
-            if(traco == process[u][0])
-              file2<<"p"<<u;
-          }
-        }
-        file2<<"|"<<time_passed<<"|";
         for(int i=0;i<n;i++) // Quando nao é o process da vez, incrementar time of espera deles
         {
           if((process[i][0] <= time_passed)&&(process[i][1] != 0)) // Se o process tiver chegado ate aqui e nao estiver finalizado
@@ -459,6 +457,38 @@ static void RRcomDiagrama(int process[][2], int n)
 
           }
         }
+        return_time[id]+=quantum;
+        process[id][1]-=quantum;
+        time_passed+=quantum;
+        if(process[id][1]==0)
+          return_time[id]=time_passed;
+        //cout<<"P"<<id<<" left "<<process[id][1]<<" to run"<< " time "<<time_passed<<endl;
+        for(int j=0;j<quantum;j++)
+        {
+          if(j == quantum/2)
+            file2<<"P"<<id;
+          file2<<"-";
+          traco++;
+          for(int u=0;u<n;u++)
+          {
+            if(traco == process[u][0])
+              file2<<"p"<<u;
+          }
+        }
+        for(int i=0;i<n;i++) // Quando nao é o process da vez, incrementar time of espera deles
+        {
+          if((process[i][0] <= time_passed)&&(process[i][1] != 0)) // Se o process tiver chegado ate aqui e nao estiver finalizado
+
+          {
+            if(i != id) // Se nao for o process a ser escalonado no instante, incrementar o time of espera
+            {
+              if(!isInQueue(processQueue,i))
+                processQueue.push(i);
+            }
+
+          }
+        }
+        file2<<"|"<<time_passed<<"|";
       }
       else
       {
@@ -494,10 +524,10 @@ static void RRcomDiagrama(int process[][2], int n)
       }
     }
   }
-    if(id == (n-1)) // Se o while tiver no ultimo process, reiniciar o loop, senao incrementar id
+    /*if(id == (n-1)) // Se o while tiver no ultimo process, reiniciar o loop, senao incrementar id
       id=0;
     else
-      id++;
+      id++;*/
   }
   float medium_response_time=0;
   float medium_waiting_time=0;
@@ -506,16 +536,17 @@ static void RRcomDiagrama(int process[][2], int n)
   ordernarProcessosChegada(process,n);
   for(int i=0;i<n;i++)
   {
-    response_time[i]-=process[i][0];
-    waiting_time[i]-=process[i][0];
+    file<<"P["<<i<<"] "<<process[i][0]<<" "<<process[i][1]<<endl<<
+    std::fixed<<std::setprecision(1)<<"time of return: "<<return_time[i]<<endl
+    <<"time of response: "<<response_time[i]<<endl<<
+    "time of espera: "<<waiting_time[i]<<endl<<endl;
     return_time[i]-=process[i][0];
+    response_time[i]-=process[i][0];
+  //  waiting_time[i]-=process[i][0];
+    waiting_time[i]=return_time[i]-process[i][1];
     medium_return_time+=return_time[i];
     medium_response_time+=response_time[i];
     medium_waiting_time+=waiting_time[i];
-    file<<"P["<<i<<"] "<<process[i][0]<<" "<<process[i][1]<<endl<<
-    std::fixed<<std::setprecision(1)<<"time of retorno: "<<return_time[i]<<endl
-    <<"time of return: "<<response_time[i]<<endl<<
-    "time of espera: "<<waiting_time[i]<<endl<<endl;
   }
   //cout<<"time return medio: "<<"time of return: "<<medium_return_time<<endl;
   medium_waiting_time/=n;

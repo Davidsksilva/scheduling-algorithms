@@ -1,32 +1,32 @@
-Diagrama do tempo do Escalonamento por RR:
+Diagrama do time do Escalonamento por RR:
 
 Legenda do diagrama:
-Pn: processo n executado
-pn: processo n chegou na fila
-idle= cpu sem processo
+Pn: process n executado
+pn: process n chegou na fila
+idle= cpu sem process
 
-|0|p0p1----p2p3P0------|10|----------P1----------|30|--P2----|36|---P3-----|44|
+|0|p0p1-P0-|2|-P1-p2p3|4|-P0-|6|-P2-|8|-P3-|10|-P1-|12|-P0-|14|-P2-|16|-P3-|18|-P1-|20|-P0-|22|-P2-|24|-P3-|26|-P1-|28|-P0-|30|-P3-|32|-P1-|34|-P0-|36|-P0-|38|-P0-|40|-P0-|42|-P0-|44|
 
-P[0] 0 10
-Tempo de retorno: 10.0
-Tempo de resposta: 0.0
-Tempo de espera: 0.0
+P[0] 0 20
+time of return: 44.0
+time of response: 0.0
+time of espera: 24.0
 
-P[1] 0 20
-Tempo de retorno: 30.0
-Tempo de resposta: 10.0
-Tempo de espera: 10.0
+P[1] 0 10
+time of return: 34.0
+time of response: 2.0
+time of espera: 24.0
 
 P[2] 4 6
-Tempo de retorno: 32.0
-Tempo de resposta: 26.0
-Tempo de espera: 26.0
+time of return: 24.0
+time of response: 6.0
+time of espera: 14.0
 
 P[3] 4 8
-Tempo de retorno: 40.0
-Tempo de resposta: 32.0
-Tempo de espera: 32.0
+time of return: 32.0
+time of response: 8.0
+time of espera: 20.0
 
-Tempo de retorno medio: 28.0
-Tempo de resposta medio: 17.0
-Tempo de espera medio: 17.0
+time of return medio: 31.5
+time of resposta medio: 2.0
+time of espera medio: 20.5

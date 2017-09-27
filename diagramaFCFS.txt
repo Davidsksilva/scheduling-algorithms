@@ -1,34 +1,34 @@
-Diagrama do tempo do Escalonamento por FCFS:
+Diagrama do time do Escalonamento por FCFS:
 
 Legenda do diagrama:
-Pn: processo n executado
-pn: processo n chegou na fila
-idle= cpu sem processo
+Pn: process n executado
+pn: process n chegou na fila
+idle= cpu sem process
 
-|0|p0p1----p2p3-P0-----|10|----------P1----------|30|---P2---|36|----P3----|44|
+|0|p0p1----p2p3------P0----------|20|-----P1-----|30|---P2---|36|----P3----|44|
 
-P[0] 0 10
-Tempo de retorno: 10
-Tempo de resposta: 0
-Tempo de espera: 0
+P[0] 0 20
+time of retorno: 20
+time of return: 0
+time of espera: 0
 
-P[1] 0 20
-Tempo de retorno: 30
-Tempo de resposta: 10
-Tempo de espera: 10
+P[1] 0 10
+time of retorno: 30
+time of return: 20
+time of espera: 20
 
 P[2] 4 6
-Tempo de retorno: 32
-Tempo de resposta: 26
-Tempo de espera: 26
+time of retorno: 32
+time of return: 26
+time of espera: 26
 
 P[3] 4 8
-Tempo de retorno: 40
-Tempo de resposta: 32
-Tempo de espera: 32
+time of retorno: 40
+time of return: 32
+time of espera: 32
 
 
 
-Tempo de retorno medio: 28.0
-Tempo de resposta medio: 17.0
-Tempo de espera medio: 17.0
+time of return medio: 30.5
+time of resposta medio: 19.5
+time of espera medio: 19.5
