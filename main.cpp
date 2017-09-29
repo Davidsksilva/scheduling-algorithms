@@ -400,23 +400,23 @@ static void RRcomDiagrama(int process[][2], int n)
   processQueue.push(0);
   while(processLeft(process,n)) // Checa se tem process sem ser finalizado
   {
-    if(!processQueue.empty())
+    if(!processQueue.empty()) // Se a fila de prontos nao estiver vazia
     {
       id= processQueue.front();
       processQueue.pop();
     }
-
     if(process[id][1] != 0)
     {
     if(process[id][0] > time_passed)
     {
       for(int j=0;j<n;j++)
       {
-        if((process[j][0] <=time_passed)&&(process[j][1] != 0)) // Procura processs na fila que nao foram finalizados
+
+        /*if((process[j][0] <=time_passed)&&(process[j][1] != 0)) // Procura processs na fila que nao foram finalizados
         {
           id=j; // Escalona esse process
           break;
-        }
+        }*/
       }
       idle=process[id][0]-time_passed;
       time_passed+=idle;
@@ -523,6 +523,10 @@ static void RRcomDiagrama(int process[][2], int n)
         process[id][1]=0;
       }
     }
+  }
+  else
+  {
+    id++;
   }
     /*if(id == (n-1)) // Se o while tiver no ultimo process, reiniciar o loop, senao incrementar id
       id=0;
