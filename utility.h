@@ -78,4 +78,40 @@ inline void transferText(string input,string output)
   outfile.close();
 }
 
+int nextProcessSJF(int process[][2], int n, int t)
+{
+  int id_min_duration=2147483647;
+  if(processLeft(process,n))
+  {
+    for(int i=0;i<n;i++)
+    {
+
+        if((process[i][0]<=t) && (process[i][1]!= 0)) // Se process disponivel estiver em time
+        {
+          if(id_min_duration==2147483647)
+            id_min_duration=i;
+          else if(process[i][1]< process[id_min_duration][1])
+              id_min_duration=i;
+        }
+    }
+    if(id_min_duration == 2147483647) // Se o process disponivel nao estiver no time
+    {
+      for(int i=0;i<n;i++)
+      {
+        if((process[i][0]>t) && (process[i][1]!= 0)) // Se process disponivel nao estiver em time
+        {
+          t=process[i][0];
+          id_min_duration=i;
+        }
+
+      }
+
+    }
+  }
+  if(id_min_duration==2147483647)
+    return -1;
+  else
+   return id_min_duration;
+}
+
 #endif
