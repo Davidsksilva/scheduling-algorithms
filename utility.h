@@ -93,17 +93,26 @@ int nextProcessSJF(int process[][2], int n, int t)
           else if(process[i][1]< process[id_min_duration][1])
               id_min_duration=i;
         }
+
     }
     if(id_min_duration == 2147483647) // Se o process disponivel nao estiver no time
     {
+
       for(int i=0;i<n;i++)
       {
         if((process[i][0]>t) && (process[i][1]!= 0)) // Se process disponivel nao estiver em time
         {
           t=process[i][0];
           id_min_duration=i;
+          break;
         }
-
+      }
+        for(int i=id_min_duration;i<n;i++)
+        {
+          if((process[i][0]==t) && (process[i][1]!= 0)) // Se process disponivel nao estiver em time
+          {
+            id_min_duration=i;
+          }
       }
 
     }

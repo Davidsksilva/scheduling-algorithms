@@ -8,31 +8,39 @@
 
 using namespace std;
 
-void FCFS(int process [][2],int n)
-{
-  ordernarProcessosChegada(process,n);
-  float medium_return_time=0;
-  float medium_response_time=0;
-  float medium_waiting_time=0;
-  int time_passed= process[0][0];
-  for(int i=0;i<n;i++)
+  struct Process
   {
-    if(process[i][0] > time_passed)
-        time_passed+= process[i][0] - time_passed;
-    medium_return_time+=time_passed+process[i][1] - process[i][0];
-    medium_response_time+=time_passed - process[i][0];
-    medium_waiting_time+=time_passed - process[i][0];
-    time_passed+=process[i][1];
+    int return_time=0;
+    int response_time=0;
+    int waiting_time=0;
+    int arrive_time=0;
+    int remaining_time=0;
+  };
+  void FCFS(int process [][2],int n)
+  {
+    ordernarProcessosChegada(process,n);
+    float medium_return_time=0;
+    float medium_response_time=0;
+    float medium_waiting_time=0;
+    int time_passed= process[0][0];
+    for(int i=0;i<n;i++)
+    {
+      if(process[i][0] > time_passed)
+          time_passed = process[i][0];
+      medium_return_time+=time_passed+process[i][1] - process[i][0];
+      medium_response_time+=time_passed - process[i][0];
+      medium_waiting_time+=time_passed - process[i][0];
+      time_passed+=process[i][1];
+
+    }
+    medium_return_time/=n;
+    medium_response_time/=n;
+    medium_waiting_time/=n;
+
+    cout<<"FCFS "<<std::fixed<<std::setprecision(1)<<medium_return_time<<" "
+    <<medium_response_time<<" "<<medium_waiting_time<<endl;
 
   }
-  medium_return_time/=n;
-  medium_response_time/=n;
-  medium_waiting_time/=n;
-
-  cout<<"FCFS "<<std::fixed<<std::setprecision(1)<<medium_return_time<<" "
-  <<medium_response_time<<" "<<medium_waiting_time<<endl;
-
-}
 void SJF(int process [][2],int n)
 {
     ordernarProcessosChegada(process,n);
@@ -165,14 +173,15 @@ void RR(int process[][2], int const n)
   }
 int main()
 {
+
   int n = getLines();
   int process[n][2];
   getProcessData(process);
-  FCFS(process,n);
+  FCFScomDiagrama(process,n);
   getProcessData(process);
-  SJF(process,n);
+  SJFcomDiagrama(process,n);
   getProcessData(process);
-  RR(process,n);
+  RRcomDiagrama(process,n);
 
   return 0;
 }

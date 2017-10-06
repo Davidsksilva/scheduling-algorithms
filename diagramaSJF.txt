@@ -9,22 +9,22 @@ idle= cpu sem process
 
 P[1] 0 10
 time of retorno: 10
-time of return: 0
+time of response: 0
 time of espera: 0
 
 P[2] 4 6
 time of retorno: 12
-time of return: 6
+time of response: 6
 time of espera: 6
 
 P[3] 4 8
 time of retorno: 20
-time of return: 12
+time of response: 12
 time of espera: 12
 
 P[0] 0 20
 time of retorno: 44
-time of return: 24
+time of response: 24
 time of espera: 24
 
 

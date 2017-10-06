@@ -28,8 +28,7 @@ void FCFScomDiagrama(int process [][2],int n)
   {
     if(process[i][0] > time_passed)
     {
-        idle= process[i][0] - time_passed;
-        time_passed+=idle;
+        time_passed= process[i][0];
         for(int k=0;k<idle;k++)
         {
           if(k==idle/2)
@@ -65,7 +64,7 @@ void FCFScomDiagrama(int process [][2],int n)
 
     file<<"P["<<i<<"] "<<process[i][0]<<" "<<process[i][1]<<endl<<
     std::fixed<<std::setprecision(1)<<"time of retorno: "<<time_passed+process[i][1]-process[i][0]<<endl
-    <<"time of return: "<<time_passed - process[i][0]+ idle<<endl<<
+    <<"time of response: "<<time_passed - process[i][0]+ idle<<endl<<
     "time of espera: "<<time_passed - process[i][0] + idle<<endl<<endl;
 
     time_passed+=process[i][1];
@@ -119,8 +118,7 @@ void SJFcomDiagrama(int process [][2],int n)
   {
     if(process[id][0] > time_passed)
     {
-      idle= process[id][0] - time_passed;
-      time_passed+=idle;
+      time_passed= process[id][0];// - time_passed;
       for(int k=0;k<idle;k++)
       {
         if(k==idle/2)
@@ -135,7 +133,7 @@ void SJFcomDiagrama(int process [][2],int n)
       }
       file2<<"|"<<time_passed<<"|";
     }
-    medium_return_time+=time_passed+process[id][1] - process[id][0];
+    medium_return_time+= time_passed+process[id][1] - process[id][0];
     medium_response_time+=time_passed - process[id][0];//+ idle;
     medium_waiting_time+=time_passed - process[id][0];//+ idle;
 
@@ -154,7 +152,7 @@ void SJFcomDiagrama(int process [][2],int n)
 
     file<<"P["<<id<<"] "<<process[id][0]<<" "<<process[id][1]<<endl<<
     std::fixed<<std::setprecision(1)<<"time of retorno: "<<time_passed+process[id][1] - process[id][0]<<endl
-    <<"time of return: "<<time_passed - process[id][0]+ idle<<endl<<
+    <<"time of response: "<<time_passed - process[id][0]+ idle<<endl<<
     "time of espera: "<<time_passed - process[id][0] + idle<<endl<<endl;
 
     time_passed+=process[id][1];
@@ -208,8 +206,9 @@ void RRcomDiagrama(int process[][2], int n)
     {
     if(process[id][0] > time_passed) // Se o processo está adiantado no tempo atual
     {
-      idle=process[id][0]-time_passed;
-      time_passed+=idle;
+      time_passed=process[id][0];
+      //idle=process[id][0]-time_passed;
+      //time_passed+=idle;
       for(int k=0;k<idle;k++)
       {
         if(k==idle/2)
@@ -299,7 +298,7 @@ void RRcomDiagrama(int process[][2], int n)
   for(int i=0;i<n;i++)
   {
     file<<"P["<<i<<"] "<<process[i][0]<<" "<<process[i][1]<<endl<<
-    std::fixed<<std::setprecision(1)<<"time of return: "<<return_time[i]<<endl
+    std::fixed<<std::setprecision(1)<<"time of response: "<<return_time[i]<<endl
     <<"time of response: "<<response_time[i]<<endl<<
     "time of espera: "<<waiting_time[i]<<endl<<endl;
     return_time[i]-=process[i][0];
