@@ -15,7 +15,9 @@ using namespace std;
     int waiting_time=0;
     int arrive_time=0;
     int remaining_time=0;
+    bool initialized=false;
   };
+  
   void FCFS(int process [][2],int n)
   {
     ordernarProcessosChegada(process,n);
