@@ -5,28 +5,43 @@ Pn: process n executado
 pn: process n chegou na fila
 idle= cpu sem process
 
-|0|-P0-|2|-P1-|4|-P0-|6|-P2-|8|-P3-|10|-P1-|12|-P0-|14|-P2-|16|-P3-|18|-P1-|20|-P0-|22|-P2-|24|-P3-|26|-P1-|28|-P0-|30|-P3-|32|-P1-|34|-P0-|36|-P0-|38|-P0-|40|-P0-|42|-P0-|44|
+|2|P0|3|P1|5|P1|7||10|P2|12|P2|13||14|P3|16|P4|18|P5|20|P3|22|P6|24|P4|25|P5|26|P3|28|P6|30|P3|32|P6|33|P3|35|
 
-P[0] 0 20
-time of response: 44.0
+P[0] 2 1
+time of return: 1.0
 time of response: 0.0
-time of espera: 24.0
+waiting time: 0.0
 
-P[1] 0 10
-time of response: 34.0
+P[1] 2 4
+time of return: 5.0
+time of response: 1.0
+waiting time: 1.0
+
+P[2] 10 3
+time of return: 3.0
+time of response: 0.0
+waiting time: 0.0
+
+P[3] 14 10
+time of return: 21.0
+time of response: 0.0
+waiting time: 11.0
+
+P[4] 14 3
+time of return: 11.0
 time of response: 2.0
-time of espera: 24.0
+waiting time: 8.0
 
-P[2] 4 6
-time of response: 24.0
-time of response: 6.0
-time of espera: 16.0
+P[5] 15 3
+time of return: 11.0
+time of response: 3.0
+waiting time: 8.0
 
-P[3] 4 8
-time of response: 32.0
-time of response: 8.0
-time of espera: 22.0
+P[6] 18 5
+time of return: 15.0
+time of response: 4.0
+waiting time: 10.0
 
-time of return medio: 31.5
-time of resposta medio: 2.0
-time of espera medio: 20.5
+time of return medio: 9.6
+time of resposta medio: 1.4
+waiting time medio: 5.4

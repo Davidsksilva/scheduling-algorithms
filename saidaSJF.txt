@@ -1,27 +1,42 @@
 
 
-P[1] 0 10
-time of retorno: 10
+P[0] 2 1
+time of retorno: 1
 time of response: 0
-time of espera: 0
+waiting time: 0
 
-P[2] 4 6
-time of retorno: 12
-time of response: 6
-time of espera: 6
+P[1] 2 4
+time of retorno: 5
+time of response: 1
+waiting time: 1
 
-P[3] 4 8
-time of retorno: 20
-time of response: 12
-time of espera: 12
+P[2] 10 3
+time of retorno: 3
+time of response: 0
+waiting time: 0
 
-P[0] 0 20
-time of retorno: 44
-time of response: 24
-time of espera: 24
+P[4] 14 3
+time of retorno: 3
+time of response: 0
+waiting time: 0
+
+P[5] 15 3
+time of retorno: 5
+time of response: 2
+waiting time: 2
+
+P[6] 18 5
+time of retorno: 7
+time of response: 2
+waiting time: 2
+
+P[3] 14 10
+time of retorno: 21
+time of response: 11
+waiting time: 11
 
 
 
-time of return medio: 21.5
-time of resposta medio: 10.5
-time of espera medio: 10.5
+time of return medio: 6.4
+time of resposta medio: 2.3
+waiting time medio: 2.3

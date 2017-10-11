@@ -5,30 +5,45 @@ Pn: process n executado
 pn: process n chegou na fila
 idle= cpu sem process
 
-|0|p0p1----p2p3------P0----------|20|-----P1-----|30|---P2---|36|----P3----|44|
+|2|P0|3|P1|7||10|P2|13||14|P3|24|P4|27|P5|30|P6|35|
 
-P[0] 0 20
-time of retorno: 20
+P[0] 2 1
+time of retorno: 1
 time of response: 0
-time of espera: 0
+waiting time: 0
 
-P[1] 0 10
-time of retorno: 30
-time of response: 20
-time of espera: 20
+P[1] 2 4
+time of retorno: 5
+time of response: 1
+waiting time: 1
 
-P[2] 4 6
-time of retorno: 32
-time of response: 26
-time of espera: 26
+P[2] 10 3
+time of retorno: 3
+time of response: 0
+waiting time: 0
 
-P[3] 4 8
-time of retorno: 40
-time of response: 32
-time of espera: 32
+P[3] 14 10
+time of retorno: 10
+time of response: 0
+waiting time: 0
+
+P[4] 14 3
+time of retorno: 13
+time of response: 10
+waiting time: 10
+
+P[5] 15 3
+time of retorno: 15
+time of response: 12
+waiting time: 12
+
+P[6] 18 5
+time of retorno: 17
+time of response: 12
+waiting time: 12
 
 
 
-time of return medio: 30.5
-time of resposta medio: 19.5
-time of espera medio: 19.5
+time of return medio: 9.1
+time of resposta medio: 5.0
+waiting time medio: 5.0

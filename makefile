@@ -1,2 +1,2 @@
-escalonamento: main.cpp file.h utility.h
-	g++ -o escalonamento main.cpp -I.
+escalonamento: main.cpp file.h utility.h diagrams.h
+	g++ -o scheduler main.cpp -I.

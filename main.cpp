@@ -17,7 +17,7 @@ using namespace std;
     int remaining_time=0;
     bool initialized=false;
   };
-  
+
   void FCFS(int process [][2],int n)
   {
     ordernarProcessosChegada(process,n);
@@ -57,7 +57,7 @@ void SJF(int process [][2],int n)
     while((id=nextProcessSJF(process,n,time_passed)) != -1)
     {
       if(process[id][0] > time_passed)
-        time_passed+= process[id][0] - time_passed;
+        time_passed= process[id][0];
       medium_return_time+=time_passed+process[id][1] - process[id][0];
       medium_response_time+=time_passed - process[id][0];//+ idle;
       medium_waiting_time+=time_passed - process[id][0];//+ idle;
@@ -94,7 +94,7 @@ void RR(int process[][2], int const n)
         if(process[id][1] != 0) // Se o processo nao está finalizado
         {
           if(process[id][0] > time_passed) // Se o processo está adiantado no tempo atual
-            time_passed+=process[id][0]-time_passed;
+            time_passed=process[id][0];
           if(iniciated[id] == false) // Se o proceso atual nao foi iniacado ainda
           {
             response_time[id]=time_passed; // Definir o tempo de resposta como tempo atual
