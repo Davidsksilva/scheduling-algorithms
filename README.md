@@ -1,2 +1,3 @@
-# Escalonamento
-Algoritmos de escalonamento
+# Process Scheduling Algorithms
+
+Unfinished README.
